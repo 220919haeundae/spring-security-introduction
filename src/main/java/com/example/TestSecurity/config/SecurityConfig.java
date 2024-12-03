@@ -41,9 +41,16 @@ public class SecurityConfig {
 
         // 토큰 사용에 대한 설정
         // 로그인 요청을 할 때 사이트 위변조 방지를 위해 csrf 토큰을 같이 보내야 하는데, 아래 설정은 해당 옵션을 꺼둔다.
-        httpSecurity.csrf(auth -> {
-            auth.disable();
-        });
+//        httpSecurity.csrf(auth -> {
+//            auth.disable();
+//        });
+
+        // csrf enable 설정 시 logout을 spring security를 통해 post 방식으로 진행해야 한다.
+        httpSecurity
+                .logout(auth -> {
+                    auth.logoutUrl("/logout")
+                            .logoutSuccessUrl("/");
+                });
 
         httpSecurity.sessionManagement(auth -> {
             auth
